@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Text, Box, Heading, Link, Spinner, Flex } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
+import { Text, Box, Heading, Link, Spinner, Flex, background } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 
 
-const MotionBox = motion(Box);    //creates a motion-enabled Chakra Box
+const MotionBox = motion.create(Box);    //creates a motion-enabled Chakra Box
 
 
 function GitHubRepos() {
@@ -54,44 +54,52 @@ function GitHubRepos() {
   };
 
   return (
-    <Box>
+    <Flex bg="brand.beig" minHeight="100vh" p="8" direction="column" align="center">
+
       <motion.div variants={containerVariants} initial="hidden" animate="visible">
         <div className="App">
 
           <Box padding="4">
-            <Heading as="h1" size="lg" mb="4">
-              Welcome! These are my GitHub repos:
+            <Heading as="h1" size="lg" mb="4"  color="brand.brow">
+              Welcome, These are my GitHub repos:
             </Heading>
 
-            {loading ? (
-              <Flex height="80vh" justifyContent="center" alignItems="center" minHeight="100vh">
-                <Spinner boxSize="100px" />
-              </Flex>
-            ) : null}
           </Box>
 
-          <Box>
-            {repos.map((repo) => (
+          {loading ? (
+              <Flex height="80vh" justifyContent="center" alignItems="center" minHeight="100vh">
+                <Spinner boxSize="100px" color="brand.gre" />
+              </Flex>
+            ) : null}
 
-              <MotionBox key={repo.id} border="1px" borderRadius="md" padding="4" marginBottom="4"
+          
+          <Box>
+            {repos.map(( repo ) => (
+              <Link as={RouterLink} to={`/repo/${repo.name}`} key={repo.id} _hover={{ textDecoration: 'none', bg: 'brand.ash' }}>
+                <MotionBox key={repo.id}
+                bg="brand.gre"
+                border="0.2px" borderRadius="lg" padding="6" marginBottom="4" boxShadow="lg"
                 variants={itemVariants}   //make each box follow the stagger pattern
                 initial="hidden" animate="visible"
+                
                 // transition={{ delayChildren: index * 0.15}}    //stagger each box by 0.1s
-                whileHover={{ scale: 1.05 }}    //slightly scale up on hover
+                whileHover={{ scale: 1.05, bg: 'brand.ash' }}    //slightly scale up on hover
                 exit="hidden"     //disappear when component is removed
               >
-                <Heading as="h2" size="md" mb="2" cursor="pointer" fontWeight="semibold">
-                  <Link as={RouterLink} to={`/repo/${repo.name}`}>{repo.name}</Link>
+                <Heading as="h2" size="md" mb="2" cursor="pointer">
+                <Link as={RouterLink} to={`/repo/${repo.name}`} color="brand.gree">{repo.name}</Link>
                 </Heading>
-                <Text fontSize="xl" fontWeight="bold">{repo.description ? repo.description : 'No description available'}</Text>
-                <Text mt='2'>🌟 Stars: {repo.stargazers_count} | 🍴 Forks: {repo.forks_count}</Text>
-              </MotionBox>
+                <Text color="brand.brown">{repo.description ? repo.description : 'No description available'}</Text>
+                <Text mt='2'>⭐ Stars: {repo.stargazers_count} | 🍴 Forks: {repo.forks_count}</Text>
+                </MotionBox>
+              </Link>
+              
             ))
             }
           </Box>
         </div>
       </motion.div>
-    </Box>
+    </Flex>
   );
 }
 

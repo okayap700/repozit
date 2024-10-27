@@ -11,7 +11,7 @@ function App() {
     <Router>
       <ErrorBoundary>
         <Routes>
-          <Route path="/" element={<GitHubRepos />} />
+          <Route path="/" element={ <GitHubRepos /> } />
           <Route path="/repo/:repoName" element={<RepoDetails />} />
         </Routes>
       </ErrorBoundary>
