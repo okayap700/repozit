@@ -1,16 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import { Link as RouterLink } from "react-router-dom";
-import { Text, Box, Heading, Link, Spinner, Flex, background } from "@chakra-ui/react";
+import { Text, Box, Heading, Link, Spinner, Flex, Button, background } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 
 
 const MotionBox = motion.create(Box);    //creates a motion-enabled Chakra Box
 
 
-function GitHubRepos() {
+function GitHubRepos () {
   const [repos, setRepos] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const username = 'okayap700';
+
+  const itemsPerPage = 4;
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalPages = Math.ceil(repos.length / itemsPerPage);
+  const currentRepos = repos.slice( (currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+  const goToNextPage = () => {
+    if (currentPage < totalPages) { 
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
+  };
+  
+  const goToPreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prevPage) => prevPage -1);
+    }
+  }
 
   useEffect(() => {
     const fetchRepos = async () => {
@@ -19,9 +36,11 @@ function GitHubRepos() {
 
         if (!response.ok) { throw new Error('Failed to Fetch repositories'); }
 
-        setRepos(await response.json());
+        const data = await response.json();
+        setRepos(data);
       } catch (error) {
         console.error("Error fetching data:", error);
+        setError(error.message);
       } finally {
         setLoading(false);
       }
@@ -74,7 +93,7 @@ function GitHubRepos() {
 
           
           <Box>
-            {repos.map(( repo ) => (
+            {currentRepos.map(( repo ) => (
               <Link as={RouterLink} to={`/repo/${repo.name}`} key={repo.id} _hover={{ textDecoration: 'none', bg: 'brand.ash' }}>
                 <MotionBox key={repo.id}
                 bg="brand.gre"
@@ -99,6 +118,16 @@ function GitHubRepos() {
           </Box>
         </div>
       </motion.div>
+
+      <Flex justifyContent="space-between" mt="6" >
+        <Button onClick={ goToPreviousPage } disabled={ currentPage === 1 }
+        color="brand.gre" variant="outline"> Previous </Button>
+        <span color="brand.beig">--------</span>
+        <Text fontSize="lg" color="brand.gre">Page { currentPage } of { totalPages }</Text>
+        <span color="brand.beig">--------</span>
+        <Button onClick={ goToNextPage } disabled={ currentPage === totalPages }
+        color="brand.gre" variant="outline"> Next </Button>
+      </Flex>
     </Flex>
   );
 }
