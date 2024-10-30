@@ -56,12 +56,6 @@ function RepoDetails() {
               <p>{ repo.name }</p>
           </Heading>
 
-          {loading ? (
-              <Flex height="80vh" justifyContent="center" alignItems="center" minHeight="100vh">
-                <Spinner boxSize="100px" color="brand.gre" />
-              </Flex>
-            ) : null} 
-
           <MotionBox key={repo.id}
             bg="brand.gre"
             border="0.2px" borderRadius="lg" padding="6" marginBottom="4" boxShadow="lg"
@@ -78,7 +72,11 @@ function RepoDetails() {
             <Text mt='4' color="brand.brown">🔗 <Link href="{ repo.html_url }"> View on GitHub </Link></Text>
           </MotionBox>
           </> ) : <div>
-            <Text as="h1" color="brand.gre" > Repo not found! </Text>
+          {loading ? (
+              <Flex height="80vh" justifyContent="center" alignItems="center" minHeight="100vh">
+                <Spinner boxSize="100px" color="brand.gre" />
+              </Flex>
+            ) : <Text as="h1" color="brand.gre" > Repo not found! </Text>} 
           </div>
           }
           
