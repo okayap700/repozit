@@ -18,7 +18,7 @@ This website showcases my coding projects by displaying repositories from my Git
 
 ## Usage
 How to Use:
-*   Access the website through its web address (please provide the URL).
+*   Access the website through its web address.
 *   Browse the list of repositories.
 *   Click on a repository to view its details.
 *   Click on the provided link to visit the repository on GitHub.com.
