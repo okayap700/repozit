@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link as RouterLink } from "react-router-dom";
-import { Text, Box, Heading, Link, Spinner, Flex, Button, background } from "@chakra-ui/react";
+import { Text, Box, Heading, Link, Spinner, Flex, Button, } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 
 
