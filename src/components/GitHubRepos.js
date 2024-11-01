@@ -10,7 +10,7 @@ const MotionBox = motion.create(Box);    //creates a motion-enabled Chakra Box
 function GitHubRepos () {
   const [repos, setRepos] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [ setError] = useState(null);
+  const [setError] = useState(null);
   const username = 'okayap700';
 
   const itemsPerPage = 4;
@@ -50,7 +50,7 @@ function GitHubRepos () {
 
     // throw new Error("Test error");
 
-  }, [username]
+  }, [username, setError]
   );
 
   // Define parent variants to stagger children
