@@ -19,7 +19,7 @@ function RepoDetails() {
                 try {
                   const response = await fetch(`https://api.github.com/repos/${username}/${repoName}`);
 
-                  if (!response.ok) { throw new Error("Failed to fetch ${"); }
+                  if (!response.ok) { throw new Error(`Failed to fetch ${ repoName }`); }
                   const data = await response.json();
                     setRepo( data );
                 } catch (error) { console.error("Error fetching data: ", error); }
@@ -69,7 +69,7 @@ function RepoDetails() {
             <Text mt='2' color="brand.brown">⭐ Stars: { repo.stargazers_count } | 🍴 Forks: { repo.forks_count } </Text>
             <Text mt='2' color="brand.brown">🗓️ Created: { new Date(repo.created_at).toLocaleDateString() } </Text>
             <Text mt='2' color="brand.brown">🗓️ Updated: { new Date(repo.updated_at).toLocaleDateString() } </Text>
-            <Text mt='4' color="brand.brown">🔗 <Link href="{ repo.html_url }"> View on GitHub </Link></Text>
+            <Text mt='4' color="brand.brown">🔗 <Link href={ repo.html_url }> View on GitHub </Link></Text>
           </MotionBox>
           </> ) : <div>
           {loading ? (
